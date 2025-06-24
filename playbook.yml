@@ -1,16 +1,16 @@
 ---
 - name: Gather facts for all nodes
   hosts: all
-  gather_facts: yes
+  tasks:
+    - name: Gather facts
+      ansible.builtin.setup:
 
 - name: Frontend setup
   hosts: frontend
-  gather_facts: yes
   roles:
     - frontend
 
 - name: Backend setup
   hosts: backend
-  gather_facts: yes
   roles:
     - backend
