@@ -1,25 +1,27 @@
 variable "region" {
-  description = "AWS region to deploy instances"
+  description = "AWS region"
   default     = "us-east-1"
 }
 
-variable "key_name" {
-  description = "EC2 Key Pair Name"
-  default     = "jenkins"
+variable "vpc_id" {
+  description = "Existing VPC ID"
 }
 
-variable "security_group_id" {
-  description = "Security Group ID"
-  default     = "sg-0afbd7a30048d7e3d"
+variable "subnet_id" {
+  description = "Subnet ID inside the above VPC"
+}
+
+variable "key_name" {
+  description = "Ansible01"
 }
 
 variable "ami_amazon_linux" {
-  description = "Amazon Linux 2 AMI ID"
+  description = "AMI ID for Amazon Linux"
   default     = "ami-0f3f13f145e66a0a3"
 }
 
 variable "ami_ubuntu" {
-  description = "Ubuntu 24.04 AMI ID"
+  description = "AMI ID for Ubuntu"
   default     = "ami-020cba7c55df1f615"
 }
 
