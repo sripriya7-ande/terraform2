@@ -16,7 +16,7 @@ http {
     }
 
     upstream backend_netdata {
-        server {{ backend_ip }}:19999;
+        server {{ hostvars['u21.local']['ansible_default_ipv4']['address'] }}:19999;
     }
 
     server {
