@@ -13,3 +13,4 @@
     name: netdata
     state: started
     enabled: yes
+  when: ansible_os_family == "Debian"
