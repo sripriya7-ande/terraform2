@@ -1,0 +1,17 @@
+- name: Install curl (dependency)
+  apt:
+    name: curl
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Download Netdata installer script
+  get_url:
+    url: https://my-netdata.io/kickstart.sh
+    dest: /tmp/kickstart.sh
+    mode: '0755'
+
+- name: Install Netdata from downloaded script
+  command: bash /tmp/kickstart.sh --dont-wait
+  args:
+    creates: /opt/netdata
+  ignore_errors: true

@@ -1,0 +1,23 @@
+- name: Enable nginx1 via amazon-linux-extras on Amazon Linux 2
+  command: amazon-linux-extras enable nginx1
+  when: ansible_distribution == "Amazon" and ansible_distribution_major_version == "2"
+  become: true
+
+- name: Install nginx on Amazon Linux 2 using yum
+  command: yum install -y nginx
+  when: ansible_distribution == "Amazon" and ansible_distribution_major_version == "2"
+  become: true
+
+- name: Install nginx on Debian family (like Ubuntu)
+  apt:
+    name: nginx
+    state: present
+  when: ansible_os_family == "Debian"
+  become: true
+
+- name: Start and enable nginx
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+  become: true
