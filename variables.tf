@@ -1,4 +1,4 @@
-svariable "region" {
+variable "region" {
   description = "AWS region to deploy instances"
   default     = "us-east-1"
 }
