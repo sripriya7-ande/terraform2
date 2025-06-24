@@ -6,47 +6,19 @@ http {
     include       mime.types;
     default_type  application/octet-stream;
     sendfile        on;
-    keepalive_timeout  65;
-    # :white_tick: Server 1: NGINX default (port 80)
+    keepalive_timeout 65;
+
+    # Reverse Proxy Netdata at port 80
     server {
         listen 80;
         server_name _;
-        root /usr/share/nginx/html;
-        index index.html;
-    }
-    # :white_tick: Server 2: Reverse proxy (port 19999 to backend)
-    upstream backend_netdata {
-        server 13.218.137.82:19999;  
-    }
-    server {
-        listen 19999;
+
         location / {
-            proxy_pass http://backend_netdata;
+            proxy_pass http://172.31.47.25:19999/;  # Replace with backend private IP
             proxy_http_version 1.1;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection 'upgrade';
             proxy_set_header Host $host;
-            proxy_cache_bypass $http_upgrade;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
