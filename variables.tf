@@ -1,16 +1,16 @@
-variable "region" {
+svariable "region" {
   description = "AWS region to deploy instances"
   default     = "us-east-1"
 }
 
 variable "key_name" {
   description = "EC2 Key Pair Name"
-  default     = "vpc1-key"
+  default     = "jenkins"
 }
 
 variable "security_group_id" {
   description = "Security Group ID"
-  default     = "sg-0761c2cdee06474d8"
+  default     = "subnet-06e5859208fb840f5"
 }
 
 variable "ami_amazon_linux" {
