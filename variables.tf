@@ -10,7 +10,7 @@ variable "key_name" {
 
 variable "security_group_id" {
   description = "Security Group ID"
-  default     = "sg-026766ebf27ad3466"
+  default     = "sg-0afbd7a30048d7e3d"
 }
 
 variable "ami_amazon_linux" {
