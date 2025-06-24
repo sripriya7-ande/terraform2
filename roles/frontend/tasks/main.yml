@@ -1,22 +1,17 @@
+---
 - name: Enable nginx1 via amazon-linux-extras on Amazon Linux 2
   command: amazon-linux-extras enable nginx1
   when: ansible_distribution == "Amazon" and ansible_distribution_major_version == "2"
-  become: true
 
 - name: Install nginx on Amazon Linux 2 using yum
-  yum:
-    name: nginx
-    state: present
+  command: yum install -y nginx
   when: ansible_distribution == "Amazon" and ansible_distribution_major_version == "2"
-  become: true
 
 - name: Install nginx on Debian family (like Ubuntu)
   apt:
     name: nginx
     state: present
-    update_cache: yes
   when: ansible_os_family == "Debian"
-  become: true
 
 - name: Copy nginx reverse proxy config
   template:
@@ -24,11 +19,9 @@
     dest: /etc/nginx/nginx.conf
     mode: '0644'
   notify: restart nginx
-  become: true
 
 - name: Start and enable nginx
   service:
     name: nginx
     state: started
     enabled: yes
-  become: true
