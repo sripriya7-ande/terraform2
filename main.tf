@@ -40,11 +40,12 @@ resource "local_file" "ansible_inventory" {
   filename = "${path.module}/hosts"
 
   content = <<-EOT
-    [frontend]
-    c8.local ansible_host=${aws_instance.amazon_linux_vm.public_ip} ansible_user=ec2-user
+   [frontend]
+c8.local ansible_host=107.20.81.70 ansible_user=ec2-user ansible_ssh_private_key_file=~/.ssh/Ansible01.pem
 
-    [backend]
-    u21.local ansible_host=${aws_instance.ubuntu_vm.public_ip} ansible_user=ubuntu
+[backend]
+u21.local ansible_host=13.222.170.73 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/Ansible01.pem
+
   EOT
 
   file_permission      = "0777"
