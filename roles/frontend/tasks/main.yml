@@ -1,13 +1,18 @@
----
-- name: Ensure backend facts are available
-  setup:
-  delegate_to: u21.local
-  run_once: true
+- name: Enable nginx1 via amazon-linux-extras
+  command: amazon-linux-extras enable nginx1
+  become: true
+  when: ansible_distribution == "Amazon" and ansible_distribution_major_version == "2"
 
-- name: Set backend IP
-  set_fact:
-    backend_ip: "{{ hostvars['u21.local']['ansible_default_ipv4']['address'] }}"
+- name: Install nginx
+  yum:
+    name: nginx
+    state: present
+  become: true
+  when: ansible_distribution == "Amazon" and ansible_distribution_major_version == "2"
 
-- name: Show backend IP
-  debug:
-    var: backend_ip
+- name: Start and enable nginx
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+  become: true
