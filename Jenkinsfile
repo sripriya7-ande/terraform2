@@ -14,23 +14,23 @@ pipeline {
 
     stage('Terraform Init and Apply') {
       steps {
-        withCredentials([[
-          $class: 'AmazonWebServicesCredentialsBinding',
-          credentialsId: 'aws-credentials-id'
-        ]]) {
-          sh '''
-            terraform init
-            terraform apply -auto-approve
-          '''
-        }
+        sh '''
+          terraform init
+          terraform apply -auto-approve
+        '''
       }
     }
 
     stage('Run Ansible') {
       steps {
-        sh '''
-          ansible-playbook -i hosts playbook.yml
-        '''
+        withCredentials([file(credentialsId: 'jenkins-key', variable: 'KEY_FILE')]) {
+          sh '''
+            mkdir -p ~/.ssh
+            cp $KEY_FILE ~/.ssh/New.pem
+            chmod 400 ~/.ssh/New.pem
+            ansible-playbook -i hosts playbook.yml
+          '''
+        }
       }
     }
   }
