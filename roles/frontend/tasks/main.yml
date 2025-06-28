@@ -1,7 +1,12 @@
 ---
+- name: Ensure backend facts are available
+  setup:
+  delegate_to: u21.local
+  run_once: true
+
 - name: Set backend IP
   set_fact:
-    backend_ip: "{{ hostvars['u21.local'].ansible_default_ipv4.address }}"
+    backend_ip: "{{ hostvars['u21.local']['ansible_default_ipv4']['address'] }}"
 
 - name: Show backend IP
   debug:
