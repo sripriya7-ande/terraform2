@@ -1,5 +1,5 @@
 [frontend]
-c8.local ansible_host=52.23.239.170 ansible_user=ec2-user
+c8.local ansible_host=44.222.195.152 ansible_user=ec2-user
 
 [backend]
-u21.local ansible_host=3.95.215.106 ansible_user=ubuntu
+u21.local ansible_host=100.27.255.122 ansible_user=ubuntu
