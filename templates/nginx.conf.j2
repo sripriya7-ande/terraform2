@@ -1,22 +1,29 @@
-worker_processes auto;
+worker_processes 1;
+
 events {
     worker_connections 1024;
 }
+
 http {
     include       mime.types;
     default_type  application/octet-stream;
     sendfile        on;
     keepalive_timeout  65;
+
+    upstream backend_netdata {
+        server {{ hostvars['u21.local'].ansible_host }}:19999;
+    }
+
     server {
         listen 80;
         server_name _;
-        root /usr/share/nginx/html;
-        index index.html;
+
+        location / {
+            root /usr/share/nginx/html;
+            index index.html;
+        }
     }
-    # :repeat: Reverse proxy Netdata
-    upstream backend_netdata {
-        server {{ hostvars['u21.local']['ansible_host'] }}:19999;
-    }
+
     server {
         listen 19999;
         location / {
@@ -29,12 +36,3 @@ http {
         }
     }
 }
-
-
-
-
-
-
-
-
-
