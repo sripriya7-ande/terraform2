@@ -34,8 +34,8 @@ pipeline {
         withCredentials([file(credentialsId: 'jenkins-key', variable: 'KEY_FILE')]) {
           sh '''
             mkdir -p ~/.ssh
-            cp $KEY_FILE ~/.ssh/jenkins.pem
-            chmod 400 ~/.ssh/jenkins.pem
+            cp $KEY_FILE ~/.ssh/New.pem
+            chmod 400 ~/.ssh/New.pem
 
             ansible-playbook -i hosts playbook.yml
           '''
