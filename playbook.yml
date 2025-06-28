@@ -1,12 +1,18 @@
 ---
-- name: Configure frontend
-  hosts: frontend
+- name: Gather facts for all nodes
+  hosts: all
   gather_facts: yes
-  roles:
-    - frontend
+  tasks:
+    - name: Ensure facts are gathered
+      debug:
+        msg: "Facts gathered for {{ inventory_hostname }}"
 
 - name: Configure backend
   hosts: backend
-  gather_facts: yes
   roles:
     - backend
+
+- name: Configure frontend
+  hosts: frontend
+  roles:
+    - frontend
