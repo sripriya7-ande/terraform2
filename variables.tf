@@ -15,7 +15,7 @@ variable "security_group_id" {
 }
 
 variable "key_name" {
-  default = "jenkins"
+  default = "New"
 }
 
 variable "instance_type" {
