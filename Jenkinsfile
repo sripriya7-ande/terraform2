@@ -30,19 +30,19 @@ pipeline {
     }
 
     stage('Run Ansible') {
-      steps {
-        withCredentials([file(credentialsId: 'jenkins-key', variable: 'KEY_FILE')]) {
-          sh '''
-            mkdir -p ~/.ssh
-            cp $KEY_FILE ~/.ssh/jenkins.pem
-            chmod 400 ~/.ssh/jenkins.pem
+  steps {
+    withCredentials([file(credentialsId: 'jenkins-key', variable: 'KEY_FILE')]) {
+      sh '''
+        mkdir -p ~/.ssh
+        cp $KEY_FILE ~/.ssh/jenkins.pem
+        chmod 400 ~/.ssh/jenkins.pem
 
-            ansible-playbook -i hosts playbook.yml
-          '''
-        }
-      }
+        ansible-playbook -i hosts playbook.yml
+      '''
     }
   }
+}
+
 
   post {
     success {
