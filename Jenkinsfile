@@ -14,10 +14,15 @@ pipeline {
 
     stage('Terraform Init and Apply') {
       steps {
-        sh '''
-          terraform init
-          terraform apply -auto-approve
-        '''
+        withCredentials([[
+          $class: 'AmazonWebServicesCredentialsBinding',
+          credentialsId: 'aws-credentials-id'
+        ]]) {
+          sh '''
+            terraform init
+            terraform apply -auto-approve
+          '''
+        }
       }
     }
 
