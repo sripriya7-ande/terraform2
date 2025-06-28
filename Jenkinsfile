@@ -14,10 +14,18 @@ pipeline {
 
     stage('Terraform Init and Apply') {
       steps {
-        sh '''
-          terraform init
-          terraform apply -auto-approve
-        '''
+        withCredentials([[
+          $class: 'AmazonWebServicesCredentialsBinding',
+          credentialsId: 'aws-credentials-id'
+        ]]) {
+          sh '''
+            export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+            export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+
+            terraform init
+            terraform apply -auto-approve
+          '''
+        }
       }
     }
 
@@ -26,8 +34,9 @@ pipeline {
         withCredentials([file(credentialsId: 'jenkins-key', variable: 'KEY_FILE')]) {
           sh '''
             mkdir -p ~/.ssh
-            cp $KEY_FILE ~/.ssh/New.pem
-            chmod 400 ~/.ssh/New.pem
+            cp $KEY_FILE ~/.ssh/jenkins.pem
+            chmod 400 ~/.ssh/jenkins.pem
+
             ansible-playbook -i hosts playbook.yml
           '''
         }
