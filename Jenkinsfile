@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('Checkout Code') {
       steps {
-        git branch: 'main', url: 'https://github.com/nithinreddy8811/terraform2.git'
+        git branch: 'main', url: 'https://github.com/sripriya7-ande/terraform2.git'
       }
     }
 
@@ -32,10 +32,10 @@ pipeline {
 
   post {
     success {
-      echo '✅ Deployment completed successfully!'
+      echo 'Deployment completed successfully!'
     }
     failure {
-      echo '❌ Pipeline failed!'
+      echo 'Pipeline failed!'
     }
   }
 }
