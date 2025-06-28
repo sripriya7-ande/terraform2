@@ -33,11 +33,11 @@ pipeline {
       steps {
         withCredentials([file(credentialsId: 'jenkins-key', variable: 'KEY_FILE')]) {
           sh '''
-            mkdir -p ~/.ssh
-            cp $KEY_FILE ~/.ssh/New.pem
-            chmod 400 ~/.ssh/New.pem
+            mkdir -p $HOME/.ssh
+            cp $KEY_FILE $HOME/.ssh/New.pem
+            chmod 400 $HOME/.ssh/New.pem
 
-            ansible-playbook -i hosts playbook.yml --private-key=~/.ssh/New.pem
+            ansible-playbook -i hosts playbook.yml --private-key=$HOME/.ssh/New.pem
           '''
         }
       }
