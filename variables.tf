@@ -5,22 +5,22 @@ variable "region" {
 
 variable "vpc_id" {
   description = "Existing VPC ID"
-  default     = "vpc-0b23deca78dbcdfc7"
+  default     = "vpc-029a0b8e705fd2daa"
 }
 
 variable "subnet_id" {
   description = "Subnet ID inside the above VPC"
-  default     = "subnet-028ebfc5aa672d8b6"
+  default     = "subnet-0bff81c8697e02fe5"
 }
 
 variable "security_group_id" {
   description = "Security Group ID"
-  default     = "sg-00dd35d245995813f"
+  default     = "sg-057d2913e45a6a15f"
 }
 
 variable "key_name" {
   description = "Key Pair name"
-  default     = "jenkins"
+  default     = "jenkins" # Make sure this key pair exists in us-east-1
 }
 
 variable "instance_type" {
@@ -30,7 +30,7 @@ variable "instance_type" {
 
 variable "ami_amazon_linux" {
   description = "Amazon Linux 2 AMI ID"
-  default     = "ami-0f3f13f145e66a0a3"
+  default     = "ami-000ec6c25978d5999"
 }
 
 variable "ami_ubuntu" {
