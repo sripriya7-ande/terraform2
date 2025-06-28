@@ -10,12 +10,12 @@ resource "aws_instance" "amazon_linux_vm" {
   vpc_security_group_ids = [var.security_group_id]
 
   tags = {
-    Name = "c8.local"
+    Name = "Amazon-Linux-Server"
   }
 
   user_data = <<-EOF
               #!/bin/bash
-              hostnamectl set-hostname c8.local
+              hostnamectl set-hostname amazon.local
               EOF
 }
 
@@ -27,24 +27,25 @@ resource "aws_instance" "ubuntu_vm" {
   vpc_security_group_ids = [var.security_group_id]
 
   tags = {
-    Name = "u21.local"
+    Name = "Ubuntu-Server"
   }
 
   user_data = <<-EOF
               #!/bin/bash
-              hostnamectl set-hostname u21.local
+              hostnamectl set-hostname ubuntu.local
               EOF
 }
 
+# This is the fixed part: Use public IPs directly in Ansible inventory
 resource "local_file" "ansible_inventory" {
   filename = "${path.module}/hosts"
 
   content = <<-EOT
     [frontend]
-    c8.local ansible_host=${aws_instance.amazon_linux_vm.public_ip} ansible_user=ec2-user ansible_ssh_private_key_file=~/.ssh/jenkins.pem
+    ${aws_instance.amazon_linux_vm.public_ip} ansible_user=ec2-user ansible_ssh_private_key_file=~/.ssh/jenkins.pem
 
     [backend]
-    u21.local ansible_host=${aws_instance.ubuntu_vm.public_ip} ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/jenkins.pem
+    ${aws_instance.ubuntu_vm.public_ip} ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/jenkins.pem
   EOT
 
   file_permission      = "0777"
